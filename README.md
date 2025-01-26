@@ -1,6 +1,6 @@
 # Background Removal API Integration
 
-Python wrapper for BEN API that removes backgrounds from images.
+Python wrapper for the BEN API that removes backgrounds from images.
 
 ## Installation
 

@@ -3,23 +3,6 @@ import base64
 from PIL import Image
 import io
 import numpy as np
-import torch 
-import torch.nn.functional as F
-from torchvision import transforms 
-
-
-
-
-def post_process(result: torch.Tensor, im_size: list) -> np.ndarray:
-    result = torch.squeeze(F.interpolate(result, size=im_size, mode='bilinear'), 0)
-    ma = torch.max(result)
-    mi = torch.min(result)
-    result = (result - mi) / (ma - mi)
-    im_array = (result * 255).permute(1, 2, 0).cpu().data.numpy().astype(np.uint8)
-    im_array = np.squeeze(im_array)
-    return im_array
-
-
 
 
 def predict_image(image, api_key, api_url="https://api.backgrounderase.net/v2"):
@@ -50,21 +33,12 @@ def predict_image(image, api_key, api_url="https://api.backgrounderase.net/v2"):
             
             mask_array = np.array(mask_img)
 
-            mask_tensor = torch.from_numpy(mask_array).float().div(255.0)
+            mask = Image.fromarray(mask_array)
 
-            mask_tensor = mask_tensor.unsqueeze(0).unsqueeze(0) 
-            
-            alpha = post_process(mask_tensor,image.size)
+            image = image.convert("RGB")
+            mask = mask.resize(image.size)
 
-
-
-            pred_pil = transforms.ToPILImage()(alpha)
-            mask = pred_pil.resize(image.size)
             image.putalpha(mask)
-
-            mask = Image.fromarray(alpha)
-
-
 
             return mask, image 
         except Exception as e:

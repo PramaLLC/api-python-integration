@@ -32,5 +32,5 @@ foregorund.save("foreground.png")
 ```
 
 
-## API Documentation
+## API documentation
 For full API documentation visit: https://backgrounderase.net/api-docs

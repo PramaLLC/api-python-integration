@@ -5,8 +5,8 @@ Python wrapper for the BEN API that removes backgrounds from images.
 ## Installation
 
 ```bash
-git clone https://github.com/PramaLLC/api-python-integration
-cd api-python-integration
+git clone https://github.com/PramaLLC/ben-api-python-integration
+cd ben-api-python-integration
 pip install -r requirements.txt
 ```
 

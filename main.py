@@ -1,11 +1,14 @@
 import requests
 import base64
-from PIL import Image
+from PIL import Image,ImageOps
 import io
 import numpy as np
 
-
 def predict_image(image, api_key, api_url="https://api.backgrounderase.net/v2"):
+
+
+    image = ImageOps.exif_transpose(image)
+
     buffer = io.BytesIO()
     image_resized = image.resize((1024, 1024), Image.BILINEAR)
     image_resized.save(buffer, format='JPEG', quality=85, optimize=True)
